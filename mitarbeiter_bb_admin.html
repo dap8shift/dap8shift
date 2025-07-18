@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin: Mitarbeiter Liste</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-page">
+    <div class="main-container">
+        <img src="https://wildfiresocial.com/wp-content/uploads/2019/01/amazon-logo-white._cb1509666198_.png" alt="Amazon Logo" class="logo">
+        <h1>Admin: Mitarbeiter Liste (BB)</h1>
+        <button id="add-employee-btn" class="add-button">+ Add New Employee</button>
+        <div class="employee-grid">
+            </div>
+        <a href="night_shift.html" class="back-button">← Back to Night Shift</a>
+    </div>
+
+    <div id="add-user-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Add New Employee</h2>
+            <form id="add-user-form">
+                <label for="new-employee-name">Employee Name:</label>
+                <input type="text" id="new-employee-name" name="name" required>
+                <button type="submit">Add User</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="copyright">
+        © Developed & Coded by Karim Elbeih Badawy (DAP8)
+    </footer>
+    <script type="module" src="script.js"></script>
+</body>
+</html>

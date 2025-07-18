@@ -1,0 +1,404 @@
+/* General page styling */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #002D62; 
+    color: white;
+    height: 100%;
+}
+
+/* Admin Login Icon */
+.admin-icon-container {
+    position: fixed;
+    top: 25px;
+    right: 30px;
+    z-index: 99;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+.admin-icon-container:hover {
+    transform: scale(1.15);
+}
+.admin-icon-container svg {
+    width: 35px;
+    height: 35px;
+    fill: white;
+    opacity: 0.8;
+}
+
+/* Flexbox container to center everything */
+.main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+    padding: 40px 20px 80px 20px;
+    box-sizing: border-box;
+}
+
+/* Logo styling */
+.logo {
+    width: 200px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+/* Main menu styles */
+.options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.shift-option {
+    background-color: #A8DADC;
+    color: #131A22;
+    padding: 15px 40px;
+    width: 200px;
+    font-size: 1.1em;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    border: none;
+}
+
+.shift-option:hover {
+    transform: scale(1.05);
+    background-color: #f0f8ff;
+}
+
+/* Employee list styles */
+.employee-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.employee-card {
+    background-color: #A8DADC;
+    color: #131A22;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    min-width: 240px;
+    word-wrap: break-word;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.employee-card a.employee-name-link {
+    text-decoration: none;
+    color: #131A22;
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 10px; /* Add space between name and buttons */
+}
+.employee-card a.employee-card-link:hover {
+    text-decoration: underline;
+}
+.employee-card a.employee-card-link[href=""] { /* Style if link is empty */
+    pointer-events: none;
+}
+a.employee-card-link {
+    text-decoration: none;
+}
+
+.employee-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Back button */
+.back-button {
+    margin-top: 40px;
+    color: #A8DADC;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.back-button:hover {
+    text-decoration: underline;
+}
+
+/* --- SCHEDULE PAGE STYLES --- */
+.schedule-container {
+    width: 90%;
+    max-width: 800px;
+    margin-top: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.shift-item {
+    display: grid;
+    gap: 15px;
+    align-items: center;
+    background-color: #A8DADC;
+    color: #131A22;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.shift-item.dienst {
+    grid-template-columns: 2.5fr 1.5fr 1.5fr auto;
+}
+
+.shift-item:not(.dienst) {
+    grid-template-columns: 1fr auto;
+}
+
+.shift-status-display {
+    font-size: 1.2em;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Color coding for shift statuses */
+.shift-item.frei { background-color: #28a745; color: white; }
+.shift-item.urlaub { background-color: #004085; color: white; }
+.shift-item.krank { background-color: #e83e8c; color: white; }
+
+.no-schedule {
+    color: white;
+    font-size: 1.1em;
+    opacity: 0.8;
+}
+
+.schedule-controls {
+    display: flex;
+    gap: 10px;
+}
+
+/* --- MODAL STYLES --- */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    color: #131A22;
+    padding: 20px 40px 30px 40px;
+    border: 1px solid #888;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 5px;
+    right: 15px;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#login-form, #shift-form, #add-user-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#login-form label, #shift-form label, #add-user-form label {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    text-align: left;
+}
+
+#login-form input, #shift-form input, #shift-form select, #add-user-form input {
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#login-form button, #shift-form button, #add-user-form button {
+    margin-top: 20px;
+    padding: 12px;
+    font-size: 1.1em;
+    font-weight: bold;
+    background-color: #002D62;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.error-message {
+    display: none;
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* Shift Modal styles */
+.checkbox-container {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #fff;
+}
+.checkbox-item {
+    display: block;
+    padding: 5px;
+    text-align: left;
+}
+.checkbox-item label {
+    margin-left: 10px;
+    font-weight: normal;
+}
+.time-select-container {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+.time-select-container > div {
+    flex: 1;
+}
+
+.status-selector {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    padding: 5px;
+}
+.status-selector label {
+    margin: 0;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.status-selector input {
+    margin-right: 5px;
+}
+#work-fields {
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- ADMIN BUTTON STYLES --- */
+.page-actions-container {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+.user-controls {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+.user-controls button {
+    font-size: 0.8em;
+    padding: 6px 12px;
+}
+.schedule-controls button, .edit-user-btn, .delete-user-btn {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.edit-user-btn { background-color: #f0c14b; color: #111; }
+.delete-user-btn, .delete-shift-btn { background-color: #dd4b39; color: white; }
+
+.add-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    font-weight: bold;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.add-button:hover { background-color: #218838; }
+
+.clear-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    font-weight: bold;
+    background-color: #c9302c; /* Danger red */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.clear-button:hover { background-color: #ac2925; }
+
+/* Copyright Footer */
+.copyright {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+    font-size: 0.9em;
+    color: white;
+    opacity: 0.6;
+    background-color: #002D62;
+}
+
+/* --- RESPONSIVE STYLES --- */
+@media screen and (max-width: 768px) {
+    h1 { font-size: 1.8em; }
+    .logo { width: 150px; }
+    .admin-icon-container { top: 15px; right: 15px; }
+    .employee-card { min-width: 80%; padding: 15px; }
+    .shift-item { grid-template-columns: 1fr; text-align: center; gap: 8px; padding: 20px; }
+    .shift-item.dienst { grid-template-columns: 1fr; }
+    .schedule-controls { justify-content: center; margin-top: 10px; }
+    .modal-content { width: 90%; padding: 20px; }
+    .time-select-container { flex-direction: column; gap: 0; }
+    .copyright { font-size: 0.75em; }
+}
