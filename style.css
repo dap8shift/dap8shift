@@ -108,15 +108,13 @@ h1 {
     font-size: 1.1em;
     margin-bottom: 10px; /* Add space between name and buttons */
 }
-.employee-card a.employee-card-link:hover {
+.employee-card a.employee-name-link:hover {
     text-decoration: underline;
-}
-.employee-card a.employee-card-link[href=""] { /* Style if link is empty */
-    pointer-events: none;
 }
 a.employee-card-link {
     text-decoration: none;
 }
+
 
 .employee-card:hover {
     transform: scale(1.03);
@@ -178,6 +176,7 @@ a.employee-card-link {
 .shift-item.frei { background-color: #28a745; color: white; }
 .shift-item.urlaub { background-color: #004085; color: white; }
 .shift-item.krank { background-color: #e83e8c; color: white; }
+
 
 .no-schedule {
     color: white;
@@ -324,6 +323,16 @@ a.employee-card-link {
     flex-direction: column;
 }
 
+.editing-day-display {
+    display: none;
+    background-color: #e9ecef;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+
 /* --- ADMIN BUTTON STYLES --- */
 .page-actions-container {
     display: flex;
@@ -339,14 +348,14 @@ a.employee-card-link {
     font-size: 0.8em;
     padding: 6px 12px;
 }
-.schedule-controls button, .edit-user-btn, .delete-user-btn {
+.schedule-controls button, .edit-user-btn, .delete-user-btn, .edit-shift-btn {
     padding: 5px 10px;
     border: none;
     border-radius: 5px;
     font-weight: bold;
     cursor: pointer;
 }
-.edit-user-btn { background-color: #f0c14b; color: #111; }
+.edit-user-btn, .edit-shift-btn { background-color: #f0c14b; color: #111; }
 .delete-user-btn, .delete-shift-btn { background-color: #dd4b39; color: white; }
 
 .add-button {
@@ -374,6 +383,54 @@ a.employee-card-link {
     transition: background-color 0.2s ease;
 }
 .clear-button:hover { background-color: #ac2925; }
+
+/* Styles for the confirmation modal */
+.confirm-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 20px;
+}
+.cancel-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    font-weight: bold;
+    background-color: #6c757d; /* Gray */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.cancel-button:hover {
+    background-color: #5a6268;
+}
+
+.whatsapp-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    padding: 12px 20px;
+    font-size: 1.1em;
+    font-weight: bold;
+    background-color: #25D366; /* WhatsApp Green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+.whatsapp-button svg {
+    height: 20px;
+    width: 20px;
+    fill: white;
+}
+.whatsapp-button:hover {
+    background-color: #1DA851;
+}
 
 /* Copyright Footer */
 .copyright {

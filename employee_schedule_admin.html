@@ -8,24 +8,34 @@
 </head>
 <body class="admin-schedule-page">
     <div class="main-container">
+        
         <img src="https://wildfiresocial.com/wp-content/uploads/2019/01/amazon-logo-white._cb1509666198_.png" alt="Amazon Logo" class="logo">
+        
         <h1 id="employee-name-title">Loading Schedule...</h1>
+        
         <div class="page-actions-container">
             <button id="add-shift-btn" class="add-button">+ Add New Shift(s)</button>
             <button id="clear-schedule-btn" class="clear-button">Clear All Dates</button>
         </div>
+
         <div class="schedule-container">
             </div>
-        <a href="mitarbeiter_bb_admin.html" class="back-button">← Back to Admin List</a>
+
+        <a href="index.html" class="back-button">← Back</a>
+
     </div>
 
     <div id="shift-edit-modal" class="modal-overlay">
         <div class="modal-content">
             <span class="close-button">&times;</span>
-            <h2 id="modal-title">Add New Shift</h2>
+            <h2 id="modal-title">Add/Edit Shift</h2>
             <form id="shift-form">
-                <label for="shift-day">Select Day(s):</label>
+                
+                <div id="editing-day-display" class="editing-day-display"></div>
+                
+                <label for="day-checkbox-container" id="day-select-label">Select Day(s):</label>
                 <div id="day-checkbox-container" class="checkbox-container"></div>
+                
                 <label>Status:</label>
                 <div class="status-selector">
                     <label><input type="radio" name="status" value="Dienst" id="status-dienst" checked> Dienst</label>
@@ -33,6 +43,7 @@
                     <label><input type="radio" name="status" value="Urlaub"> Urlaub</label>
                     <label><input type="radio" name="status" value="Krank"> Krank</label>
                 </div>
+                
                 <div id="work-fields">
                     <div class="time-select-container">
                         <div>
@@ -47,14 +58,41 @@
                     <label for="shift-task">Task:</label>
                     <input type="text" id="shift-task" name="task" placeholder="e.g., Picking, Stowing">
                 </div>
-                <button type="submit">Add Shift(s)</button>
+                <button type="submit">Save Changes</button>
             </form>
+        </div>
+    </div>
+    
+    <div id="confirm-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Confirm Action</h2>
+            <p>Are you sure you want to delete all shifts for this user? This cannot be undone.</p>
+            <div class="confirm-buttons">
+                <button id="cancel-delete-btn" class="cancel-button">Cancel</button>
+                <button id="confirm-delete-btn" class="clear-button">Yes, Delete All</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="success-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Success!</h2>
+            <p>The schedule has been updated successfully.</p>
+            <a id="whatsapp-notify-btn" class="whatsapp-button" href="#" target="_blank" rel="noopener noreferrer">
+                <svg fill="currentColor" viewBox="0 0 16 16" height="1em" width="1em">
+                    <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"></path>
+                </svg>
+                Notify Group on WhatsApp
+            </a>
         </div>
     </div>
 
     <footer class="copyright">
         © Developed & Coded by Karim Elbeih Badawy (DAP8)
     </footer>
+    
     <script type="module" src="script.js"></script>
 </body>
 </html>
