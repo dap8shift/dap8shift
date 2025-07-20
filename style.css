@@ -50,6 +50,10 @@ h1 {
     font-weight: bold;
     margin-bottom: 30px;
 }
+h2 {
+    border-bottom: 2px solid rgba(255,255,255,0.5);
+    padding-bottom: 10px;
+}
 
 /* Main menu styles */
 .options-container {
@@ -62,7 +66,7 @@ h1 {
     background-color: #A8DADC;
     color: #131A22;
     padding: 15px 40px;
-    width: 200px;
+    width: 250px;
     font-size: 1.1em;
     font-weight: bold;
     border-radius: 8px;
@@ -106,15 +110,11 @@ h1 {
     color: #131A22;
     font-weight: bold;
     font-size: 1.1em;
-    margin-bottom: 10px; /* Add space between name and buttons */
+    margin-bottom: 10px;
 }
 .employee-card a.employee-name-link:hover {
     text-decoration: underline;
 }
-a.employee-card-link {
-    text-decoration: none;
-}
-
 
 .employee-card:hover {
     transform: scale(1.03);
@@ -139,7 +139,7 @@ a.employee-card-link {
     width: 90%;
     max-width: 800px;
     margin-top: 20px;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     padding: 20px;
     box-sizing: border-box;
@@ -161,29 +161,22 @@ a.employee-card-link {
 .shift-item.dienst {
     grid-template-columns: 2.5fr 1.5fr 1.5fr auto;
 }
-
 .shift-item:not(.dienst) {
     grid-template-columns: 1fr auto;
 }
-
 .shift-status-display {
     font-size: 1.2em;
     font-weight: bold;
     text-transform: uppercase;
 }
-
-/* Color coding for shift statuses */
 .shift-item.frei { background-color: #28a745; color: white; }
 .shift-item.urlaub { background-color: #004085; color: white; }
 .shift-item.krank { background-color: #e83e8c; color: white; }
-
-
 .no-schedule {
     color: white;
     font-size: 1.1em;
     opacity: 0.8;
 }
-
 .schedule-controls {
     display: flex;
     gap: 10px;
@@ -203,7 +196,6 @@ a.employee-card-link {
     justify-content: center;
     align-items: center;
 }
-
 .modal-content {
     background-color: #fefefe;
     color: #131A22;
@@ -215,7 +207,6 @@ a.employee-card-link {
     position: relative;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
-
 .close-button {
     color: #aaa;
     float: right;
@@ -225,26 +216,18 @@ a.employee-card-link {
     top: 5px;
     right: 15px;
 }
-
-.close-button:hover,
-.close-button:focus {
+.close-button:hover, .close-button:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
 }
-
-#login-form, #shift-form, #add-user-form {
-    display: flex;
-    flex-direction: column;
-}
-
+#login-form, #shift-form, #add-user-form { display: flex; flex-direction: column; }
 #login-form label, #shift-form label, #add-user-form label {
     margin-top: 15px;
     margin-bottom: 5px;
     font-weight: bold;
     text-align: left;
 }
-
 #login-form input, #shift-form input, #shift-form select, #add-user-form input {
     padding: 10px;
     font-size: 1em;
@@ -253,7 +236,6 @@ a.employee-card-link {
     width: 100%;
     box-sizing: border-box;
 }
-
 #login-form button, #shift-form button, #add-user-form button {
     margin-top: 20px;
     padding: 12px;
@@ -265,7 +247,6 @@ a.employee-card-link {
     border-radius: 5px;
     cursor: pointer;
 }
-
 .error-message {
     display: none;
     color: red;
@@ -273,8 +254,6 @@ a.employee-card-link {
     margin-top: 10px;
     text-align: center;
 }
-
-/* Shift Modal styles */
 .checkbox-container {
     max-height: 200px;
     overflow-y: auto;
@@ -283,154 +262,30 @@ a.employee-card-link {
     padding: 10px;
     background-color: #fff;
 }
-.checkbox-item {
-    display: block;
-    padding: 5px;
-    text-align: left;
-}
-.checkbox-item label {
-    margin-left: 10px;
-    font-weight: normal;
-}
-.time-select-container {
-    display: flex;
-    gap: 20px;
-    width: 100%;
-}
-.time-select-container > div {
-    flex: 1;
-}
-
-.status-selector {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 15px;
-    margin-bottom: 10px;
-    background-color: #f0f0f0;
-    border-radius: 5px;
-    padding: 5px;
-}
-.status-selector label {
-    margin: 0;
-    padding: 5px 10px;
-    cursor: pointer;
-}
-.status-selector input {
-    margin-right: 5px;
-}
-#work-fields {
-    display: flex;
-    flex-direction: column;
-}
-
-.editing-day-display {
-    display: none;
-    background-color: #e9ecef;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    font-weight: bold;
-    text-align: center;
-}
-
-/* --- ADMIN BUTTON STYLES --- */
-.page-actions-container {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 25px;
-}
-.user-controls {
-    margin-top: 15px;
-    display: flex;
-    gap: 10px;
-}
-.user-controls button {
-    font-size: 0.8em;
-    padding: 6px 12px;
-}
-.schedule-controls button, .edit-user-btn, .delete-user-btn, .edit-shift-btn {
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-}
+.checkbox-item { display: block; padding: 5px; text-align: left; }
+.checkbox-item label { margin-left: 10px; font-weight: normal; }
+.time-select-container { display: flex; gap: 20px; width: 100%; }
+.time-select-container > div { flex: 1; }
+.status-selector { display: flex; justify-content: space-around; margin-top: 15px; margin-bottom: 10px; background-color: #f0f0f0; border-radius: 5px; padding: 5px; }
+.status-selector label { margin: 0; padding: 5px 10px; cursor: pointer; }
+.status-selector input { margin-right: 5px; }
+#work-fields { display: flex; flex-direction: column; }
+.editing-day-display { display: none; background-color: #e9ecef; padding: 10px; border-radius: 5px; margin-bottom: 15px; font-weight: bold; text-align: center; }
+/* ADMIN BUTTON STYLES */
+.page-actions-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 25px; }
+.user-controls { margin-top: 15px; display: flex; gap: 10px; }
+.user-controls button { font-size: 0.8em; padding: 6px 12px; }
+.schedule-controls button, .edit-user-btn, .delete-user-btn, .edit-shift-btn { padding: 5px 10px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
 .edit-user-btn, .edit-shift-btn { background-color: #f0c14b; color: #111; }
-.delete-user-btn, .delete-shift-btn { background-color: #dd4b39; color: white; }
-
-.add-button {
-    padding: 10px 20px;
-    font-size: 1em;
-    font-weight: bold;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
+.delete-user-btn, .delete-shift-btn, .clear-button { background-color: #c9302c; color: white; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.2s ease; }
+.add-button { padding: 10px 20px; font-size: 1em; font-weight: bold; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.2s ease; }
 .add-button:hover { background-color: #218838; }
-
-.clear-button {
-    padding: 10px 20px;
-    font-size: 1em;
-    font-weight: bold;
-    background-color: #c9302c; /* Danger red */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
 .clear-button:hover { background-color: #ac2925; }
-
-/* Styles for the confirmation modal */
-.confirm-buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 15px;
-    margin-top: 20px;
-}
-.cancel-button {
-    padding: 10px 20px;
-    font-size: 1em;
-    font-weight: bold;
-    background-color: #6c757d; /* Gray */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-.cancel-button:hover {
-    background-color: #5a6268;
-}
-
-.whatsapp-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
-    padding: 12px 20px;
-    font-size: 1.1em;
-    font-weight: bold;
-    background-color: #25D366; /* WhatsApp Green */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: background-color 0.2s ease;
-}
-.whatsapp-button svg {
-    height: 20px;
-    width: 20px;
-    fill: white;
-}
-.whatsapp-button:hover {
-    background-color: #1DA851;
-}
+.confirm-buttons { display: flex; justify-content: flex-end; gap: 15px; margin-top: 20px; }
+.cancel-button { padding: 10px 20px; font-size: 1em; font-weight: bold; background-color: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.2s ease; }
+.cancel-button:hover { background-color: #5a6268; }
+.whatsapp-button { padding: 10px 20px; font-size: 1em; font-weight: bold; background-color: #25D366; color: white; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; transition: background-color 0.2s ease; }
+.whatsapp-button:hover { background-color: #1DA851; }
 
 /* Copyright Footer */
 .copyright {
@@ -446,14 +301,13 @@ a.employee-card-link {
     background-color: #002D62;
 }
 
-/* --- RESPONSIVE STYLES --- */
+/* Responsive Styles */
 @media screen and (max-width: 768px) {
     h1 { font-size: 1.8em; }
     .logo { width: 150px; }
     .admin-icon-container { top: 15px; right: 15px; }
     .employee-card { min-width: 80%; padding: 15px; }
-    .shift-item { grid-template-columns: 1fr; text-align: center; gap: 8px; padding: 20px; }
-    .shift-item.dienst { grid-template-columns: 1fr; }
+    .shift-item, .shift-item.dienst { grid-template-columns: 1fr; text-align: center; gap: 8px; padding: 20px; }
     .schedule-controls { justify-content: center; margin-top: 10px; }
     .modal-content { width: 90%; padding: 20px; }
     .time-select-container { flex-direction: column; gap: 0; }

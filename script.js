@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 import { getDatabase, ref, onValue, set, get } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
 
-// Your web app's Firebase configuration
+// Your web app's Firebase configuration for the AMAZON site
 const firebaseConfig = {
     apiKey: "AIzaSyAMNlSlss_4AsFto0X3s0QHl1LQIQH8hqM",
     authDomain: "dap8-shift.firebaseapp.com",
@@ -86,7 +86,7 @@ const renderEmployeeList = (employeeList, shiftType) => {
     }
 };
 
-const renderEmployeeSchedule = (employee) => {
+const renderEmployeeSchedule = (employee, shiftType) => {
     const scheduleContainer = document.querySelector('.schedule-container');
     const employeeNameTitle = document.getElementById('employee-name-title');
     const isAdminPage = document.body.classList.contains('admin-schedule-page');
@@ -137,28 +137,8 @@ const renderEmployeeSchedule = (employee) => {
         });
     }
     if (isAdminPage) {
-        addScheduleAdminEventListeners(employee.id);
+        addScheduleAdminEventListeners(employee.id, shiftType);
     }
-};
-
-const showSuccessNotification = () => {
-    const modal = document.getElementById('success-modal');
-    const btn = document.getElementById('whatsapp-notify-btn');
-    const closeBtn = modal.querySelector('.close-button');
-
-    const message = "Attention: The schedule has been updated. Please check the website: https://dap8shift.github.io/dap8shift/";
-    const whatsappURL = `https://wa.me/?text=${encodeURIComponent(message)}`;
-    btn.href = whatsappURL;
-
-    modal.style.display = 'flex';
-
-    const closeModal = () => modal.style.display = 'none';
-    closeBtn.addEventListener('click', closeModal, { once: true });
-    window.addEventListener('click', (event) => {
-        if (event.target == modal) {
-            closeModal();
-        }
-    }, { once: true });
 };
 
 
@@ -290,20 +270,23 @@ function openShiftModal(employeeId, shiftType, shiftIndex = null) {
                     }
                     selectedDays.forEach(day => { employee.schedule.push({ ...newShiftData, day: day }); });
                 }
-                set(ref(database, `${shiftType}/bb/${employeeIndex}`), employee).then(() => {
-                    showSuccessNotification();
-                });
+                set(ref(database, `${shiftType}/bb/${employeeIndex}`), employee);
             }
         });
         modal.style.display = 'none';
     };
 }
 
-function addScheduleAdminEventListeners(employeeId) {
-    const urlParams = new URLSearchParams(window.location.search);
-    const shiftType = urlParams.get('shift');
-    if (!shiftType) return;
+function addScheduleAdminEventListeners(employeeId, shiftType) {
     const employeeListRef = ref(database, `${shiftType}/bb`);
+
+    const whatsappBtn = document.getElementById('whatsapp-notify-btn');
+    if (whatsappBtn) {
+        const message = "Attention: The Amazon schedule has been updated. Please check the site. https://dap8shift.github.io/dap8shift";
+        const whatsappURL = `https://wa.me/?text=${encodeURIComponent(message)}`;
+        whatsappBtn.href = whatsappURL;
+    }
+
     const addShiftBtn = document.getElementById('add-shift-btn');
     if (addShiftBtn) {
         addShiftBtn.addEventListener('click', () => openShiftModal(employeeId, shiftType));
@@ -312,28 +295,25 @@ function addScheduleAdminEventListeners(employeeId) {
     if (clearScheduleBtn) {
         clearScheduleBtn.addEventListener('click', () => {
             const confirmModal = document.getElementById('confirm-modal');
-            confirmModal.style.display = 'flex';
-            const confirmBtn = document.getElementById('confirm-delete-btn');
-            const cancelBtn = document.getElementById('cancel-delete-btn');
-            const confirmHandler = () => {
-                get(employeeListRef).then(snapshot => {
-                    const allEmployees = snapshot.val();
-                    const employeeIndex = allEmployees.findIndex(emp => emp && emp.id === employeeId);
-                    if(employeeIndex > -1) {
-                        allEmployees[employeeIndex].schedule = [];
-                        set(ref(database, `${shiftType}/bb/${employeeIndex}`), allEmployees[employeeIndex]).then(() => {
-                            showSuccessNotification();
-                        });
-                    }
-                });
-                confirmModal.style.display = 'none';
-            };
-            const cancelHandler = () => { confirmModal.style.display = 'none'; };
-            confirmBtn.addEventListener('click', confirmHandler, { once: true });
-            cancelBtn.addEventListener('click', cancelHandler, { once: true });
-            confirmModal.querySelector('.close-button').addEventListener('click', cancelHandler, { once: true });
+            if(confirmModal) confirmModal.style.display = 'flex';
         });
     }
+
+    const confirmBtn = document.getElementById('confirm-delete-btn');
+    if (confirmBtn) {
+        confirmBtn.addEventListener('click', () => {
+            get(employeeListRef).then(snapshot => {
+                const allEmployees = snapshot.val();
+                const employeeIndex = allEmployees.findIndex(emp => emp && emp.id === employeeId);
+                if(employeeIndex > -1) {
+                    allEmployees[employeeIndex].schedule = [];
+                    set(ref(database, `${shiftType}/bb/${employeeIndex}`), allEmployees[employeeIndex]);
+                }
+            });
+            document.getElementById('confirm-modal').style.display = 'none';
+        }, { once: true });
+    }
+
     document.querySelectorAll('.edit-shift-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const shiftIndex = parseInt(btn.dataset.index, 10);
@@ -349,14 +329,13 @@ function addScheduleAdminEventListeners(employeeId) {
                     const employeeIndex = allEmployees.findIndex(emp => emp && emp.id === employeeId);
                     if (employeeIndex > -1 && allEmployees[employeeIndex].schedule) {
                         allEmployees[employeeIndex].schedule.splice(shiftIndexToDelete, 1);
-                        set(ref(database, `${shiftType}/bb/${employeeIndex}`), allEmployees[employeeIndex]).then(() => {
-                            showSuccessNotification();
-                        });
+                        set(ref(database, `${shiftType}/bb/${employeeIndex}`), allEmployees[employeeIndex]);
                     }
                 });
             }
         });
     });
+    
     const shiftModal = document.getElementById('shift-edit-modal');
     if(shiftModal) {
         shiftModal.querySelector('.close-button').addEventListener('click', () => shiftModal.style.display = 'none');
@@ -364,14 +343,64 @@ function addScheduleAdminEventListeners(employeeId) {
     }
 }
 
-// --- MAIN APP INITIALIZATION ---
+
+// --- MAIN APP INITIALIZATION (STABLE VERSION) ---
 document.addEventListener('DOMContentLoaded', () => {
-    const sampleDates = generateDateOptions();
+    
+    // Check for a unique element on the current page to run its specific setup function
+    if (document.querySelector('.options-container')) {
+        setupShiftPage();
+    } else if (document.querySelector('.employee-grid')) {
+        setupEmployeeListPage();
+    } else if (document.querySelector('.schedule-container')) {
+        setupSchedulePage();
+    }
+});
+
+
+function setupShiftPage() {
+    const adminLoginBtn = document.getElementById('admin-login-btn');
+    const loginModal = document.getElementById('login-modal');
+    if (!adminLoginBtn || !loginModal) return;
+
+    const closeModalBtn = loginModal.querySelector('.close-button');
+    const loginForm = document.getElementById('login-form');
+    const loginError = document.getElementById('login-error');
+
+    adminLoginBtn.addEventListener('click', () => {
+        const targetShift = adminLoginBtn.dataset.shiftType;
+        localStorage.setItem('adminShiftTarget', targetShift);
+        loginModal.style.display = 'flex';
+    });
+
+    closeModalBtn.addEventListener('click', () => { loginModal.style.display = 'none'; loginError.style.display = 'none'; });
+    window.addEventListener('click', (event) => { if (event.target === loginModal) { loginModal.style.display = 'none'; loginError.style.display = 'none'; } });
+
+    loginForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const idInput = document.getElementById('admin-id').value;
+        const passInput = document.getElementById('admin-pass').value;
+        if (idInput === 'DAP8' && passInput === '123456') {
+            const targetShift = localStorage.getItem('adminShiftTarget');
+            if (targetShift) {
+                const redirectName = targetShift.replace('_shift', '');
+                window.location.href = `mitarbeiter_bb_${redirectName}_admin.html`;
+            }
+        } else {
+            loginError.style.display = 'block';
+        }
+    });
+}
+
+function setupEmployeeListPage() {
+    const shiftType = document.body.dataset.shiftType;
+    if (!shiftType) return;
+    
     const initialNames_night_shift = [ 'Basel Murdeaa', 'Andrej Opancar', 'Kristijan Vrbanic', 'Bocsan Patrik Robert Alexandru', 'Hamidi Hamid', 'Sabanagic Tarik', 'Yaser Saif', 'Hamza Dalal', 'Abdulhamid Halawa', 'Mohanad Makram', 'Omar Makram', 'Hassan Huseein Abdi', 'Mohammad Alhawama', 'Shirsha Muhabat', 'Fuad Hassan', 'Iriskan Garsiev', 'Almatar Abdel Baki', 'Elbeih Karim', 'Mohammed Abdulahi', 'Moser Patrick', 'Osman Mohamed', 'mahir Mahir', 'Bashir Osman Ali' ];
     const initialNames_hybrid_shift = [ 'Feysal Abdifatah', 'Ahmmad Albakar Alabdalah', 'Maulid Yussuf', 'Duska Ramsak', 'Robert Glavina', 'Aladi Zayan', 'Ibe Mark', 'Mehmet Akif Uenal', 'Bahzad Badini' ];
     const initialNames_early_shift = [ 'Ibrahim Nesar', 'Nuur Abdirahman', 'Akindutire Gbolahan Tijani', 'Ahmadi Ali Ullah', 'Rashid Gulstan', 'Sleman Sheikho', 'Berivan Ali', 'Fauster Daniela', 'Arab Farhan', 'Saleh Marwan' ];
     const initialNames_late_shift = [ 'Chikwakwa Chimwemmwe', 'Farghaly Hager' ];
-    const createInitialList = (names) => names.map(name => ({ id: Date.now() + Math.random().toString(36).substr(2, 9), name: name, schedule: [ { day: sampleDates[Math.floor(Math.random() * 5) + 1], time: "02:00 - 10:00", task: "Picking", status: "Dienst" } ] }));
+    const createInitialList = (names) => names.map(name => ({ id: Date.now() + Math.random().toString(36).substr(2, 9), name: name, schedule: [] }));
     const initialData = {
         night_shift: { bb: createInitialList(initialNames_night_shift) },
         hybrid_shift: { bb: createInitialList(initialNames_hybrid_shift) },
@@ -379,61 +408,29 @@ document.addEventListener('DOMContentLoaded', () => {
         late_shift: { bb: createInitialList(initialNames_late_shift) }
     };
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const shiftTypeFromUrl = urlParams.get('shift');
-    const shiftTypeFromBody = document.body.dataset.shiftType;
-    const shiftType = shiftTypeFromBody || shiftTypeFromUrl;
-
-    const adminLoginBtn = document.getElementById('admin-login-btn');
-    if (adminLoginBtn) {
-        adminLoginBtn.addEventListener('click', () => {
-            const targetShift = adminLoginBtn.dataset.shiftType;
-            localStorage.setItem('adminShiftTarget', targetShift);
-            document.getElementById('login-modal').style.display = 'flex';
-        });
-        const loginModal = document.getElementById('login-modal');
-        const closeModalBtn = loginModal.querySelector('.close-button');
-        const loginForm = document.getElementById('login-form');
-        const loginError = document.getElementById('login-error');
-        closeModalBtn.addEventListener('click', () => { loginModal.style.display = 'none'; loginError.style.display = 'none'; });
-        window.addEventListener('click', (event) => { if (event.target === loginModal) { loginModal.style.display = 'none'; loginError.style.display = 'none'; } });
-        loginForm.addEventListener('submit', (event) => {
-            event.preventDefault();
-            if (document.getElementById('admin-id').value === 'DAP8' && document.getElementById('admin-pass').value === '123456') {
-                const targetShift = localStorage.getItem('adminShiftTarget');
-                if (targetShift) {
-                    const redirectName = targetShift.replace('_shift', '');
-                    window.location.href = `mitarbeiter_bb_${redirectName}_admin.html`;
-                }
-            } else {
-                loginError.style.display = 'block';
-            }
-        });
-    }
-
-    if (shiftType && document.querySelector('.employee-grid')) {
-        const employeeListRef = ref(database, `${shiftType}/bb`);
-        onValue(employeeListRef, (snapshot) => {
-            const data = snapshot.val();
-            if (data) {
-                renderEmployeeList(data, shiftType);
-            } else {
-                set(ref(database, shiftType), initialData[shiftType]);
-            }
-        });
-    }
-
-    if (shiftType && document.querySelector('.schedule-container')) {
-        const employeeId = urlParams.get('id');
-        if (employeeId) {
-            onValue(ref(database, `${shiftType}/bb`), (snapshot) => {
-                const allEmployees = snapshot.val();
-                if (allEmployees) {
-                    const employeeData = allEmployees.find(emp => emp && emp.id === employeeId);
-                    renderEmployeeSchedule(employeeData);
-                }
-            });
+    const employeeListRef = ref(database, `${shiftType}/bb`);
+    onValue(employeeListRef, (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+            renderEmployeeList(data, shiftType);
+        } else {
+            set(ref(database, shiftType), initialData[shiftType]);
         }
+    });
+}
+
+function setupSchedulePage() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const shiftType = urlParams.get('shift');
+    const employeeId = urlParams.get('id');
+    if (shiftType && employeeId) {
+        onValue(ref(database, `${shiftType}/bb`), (snapshot) => {
+            const allEmployees = snapshot.val();
+            if (allEmployees) {
+                const employeeData = allEmployees.find(emp => emp && emp.id === employeeId);
+                renderEmployeeSchedule(employeeData, shiftType);
+            }
+        });
     }
 
     const confirmModal = document.getElementById('confirm-modal');
@@ -441,8 +438,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const cancelBtn = document.getElementById('cancel-delete-btn');
         const closeBtn = confirmModal.querySelector('.close-button');
         const closeHandler = () => confirmModal.style.display = 'none';
-        closeBtn.addEventListener('click', closeHandler);
-        cancelBtn.addEventListener('click', closeHandler);
+        if(closeBtn) closeBtn.addEventListener('click', closeHandler);
+        if(cancelBtn) cancelBtn.addEventListener('click', closeHandler);
         window.addEventListener('click', (event) => { if (event.target === confirmModal) { closeHandler(); } });
     }
-});
+}
