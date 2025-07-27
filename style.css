@@ -1,0 +1,601 @@
+/* General Body & Container Styling */
+body {
+    font-family: "Amazon Ember", Arial, sans-serif;
+    background-color: #EAEDED;
+    margin: 0;
+    color: #111;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.error-message {
+    color: #c40000;
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+/* Logo */
+.logo-text {
+    font-size: 24px;
+    font-weight: 700;
+    color: #232F3E; /* Amazon Charcoal */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo-text span {
+    color: #FF9900; /* Amazon Orange */
+}
+
+/* Login Box */
+.login-box {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    padding: 20px 26px;
+    width: 350px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.login-box h1 {
+    font-weight: 400;
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-weight: 700;
+    font-size: 13px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #a6a6a6;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #FFD814; /* Amazon Yellow */
+    border: 1px solid #F0C14B;
+    border-radius: 8px;
+    color: #111;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn:hover {
+    background-color: #F7CA00;
+}
+
+.btn[disabled] {
+    background-color: #F7CA00;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+/* Main App Header */
+.header {
+    background-color: #232F3E;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 100;
+}
+
+.header .logo-text {
+    color: #ffffff;
+    margin-bottom: 0;
+}
+
+.logout-btn {
+    background-color: transparent;
+    border: 1px solid #888;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/*
+=========================================
+MODERN ADMIN PANEL STYLES
+=========================================
+*/
+
+#admin-panel-modern {
+    display: flex;
+    height: calc(100vh - 80px); /* Full height minus header and footer */
+    background-color: #EAEDED;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+    width: 240px;
+    background-color: #232F3E;
+    padding-top: 20px;
+    flex-shrink: 0;
+    overflow-y: auto;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-item {
+    padding: 15px 20px;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    border-left: 3px solid transparent;
+    transition: background-color 0.2s, border-left 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.nav-item:hover {
+    background-color: #37475A;
+}
+
+.nav-item.active {
+    background-color: #37475A;
+    border-left: 3px solid #FF9900; /* Amazon Orange */
+}
+
+.arrow {
+    font-size: 10px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.nav-submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+    background-color: #1A2430;
+}
+
+.nav-item-dropdown.submenu-open .nav-submenu {
+    max-height: 200px;
+}
+
+.nav-item-dropdown.submenu-open .arrow {
+    transform: rotate(180deg);
+}
+
+.nav-sub-item {
+    display: block;
+    padding: 12px 20px 12px 40px; /* Indent */
+    color: #DDD;
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.nav-sub-item:hover {
+    background-color: #37475A;
+}
+
+.nav-sub-item.active {
+    font-weight: bold;
+    color: #FF9900;
+}
+
+/* --- Main Content Area --- */
+.main-content {
+    flex-grow: 1;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #DDD;
+    padding-bottom: 20px;
+}
+
+.content-header h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 400;
+}
+
+.btn-primary {
+    background-color: #0073BB; /* Amazon Blue */
+    color: #fff;
+    width: auto;
+    padding: 10px 20px;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #005A94;
+}
+
+/* --- Widgets --- */
+.widgets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.widget {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border: 1px solid #ddd;
+}
+
+.widget h3 {
+    margin-top: 0;
+    font-size: 16px;
+    color: #555;
+}
+
+.widget-value {
+    font-size: 36px;
+    font-weight: 700;
+    color: #0073BB; /* Amazon Blue */
+    margin: 10px 0;
+}
+
+.widget.full-width {
+    grid-column: 1 / -1;
+}
+
+.activity-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.activity-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+.activity-list li:last-child {
+    border-bottom: none;
+}
+
+/* --- Roster Table --- */
+.roster-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.roster-table th, .roster-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+    vertical-align: top;
+}
+.roster-table th {
+    background-color: #f7f7f7;
+    font-weight: 700;
+}
+
+/*
+=========================================
+L1 & L3 PANEL STYLES
+=========================================
+*/
+.content-box {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 900px;
+    margin: 30px auto;
+}
+
+.content-box h1 {
+    font-weight: 400;
+    font-size: 28px;
+    margin: 0;
+}
+
+/*
+=========================================
+SCHEDULES PAGE & BAR VIEW STYLES
+=========================================
+*/
+.schedule-controls {
+    margin-bottom: 20px;
+    max-width: 400px;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #a6a6a6;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+.schedule-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: #f7f7f7;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.schedule-header h1, .schedule-header h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.month-nav-btn {
+    background: #e7e9ec;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.month-nav-btn:hover {
+    background: #dde1e6;
+}
+
+#schedule-bar-view, #employee-schedule-view {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.schedule-bar-month-header {
+    font-size: 18px;
+    font-weight: 700;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.schedule-bar {
+    display: flex;
+    align-items: stretch;
+    margin-bottom: 8px;
+    min-height: 40px;
+}
+
+.bar-date {
+    flex-shrink: 0;
+    width: 100px;
+    padding: 10px;
+    font-weight: 700;
+    background-color: #f7f7f7;
+    border-radius: 4px 0 0 4px;
+    border: 1px solid #eee;
+    border-right: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.bar-events-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+}
+
+.bar-event {
+    padding: 10px 15px;
+    font-weight: 700;
+    font-size: 14px;
+    color: #fff;
+    border-radius: 0 4px 4px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.bar-event-time {
+    font-weight: normal;
+    font-size: 13px;
+    opacity: 0.9;
+}
+
+.event-Work { background-color: #a3d9ff; color: #004269; } /* Light Blue */
+.event-FREI { background-color: #a3ffaf; color: #005a0e; } /* Green */
+.event-URLAUB { background-color: #0073BB; } /* Dark Blue */
+.event-KRANK { background-color: #ff9999; color: #780000; } /* Red */
+
+
+/* --- Modals & Actions --- */
+.modal-backdrop {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); z-index: 1000;
+    display: flex; justify-content: center; align-items: center;
+}
+.modal-content {
+    background-color: #fff; padding: 20px 30px; border-radius: 8px;
+    width: 500px; max-width: 90%; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
+}
+.modal-close {
+    position: absolute; top: 10px; right: 15px; font-size: 28px;
+    font-weight: bold; color: #aaa; cursor: pointer;
+}
+.modal-close:hover { color: #333; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+.btn-secondary { background-color: #6c757d; border-color: #6c757d; color: #fff; width: auto; padding: 10px 20px; }
+.btn-secondary:hover { background-color: #5a6268; }
+.btn-danger { background-color: #c82333; border-color: #c82333; color: #fff; width: auto; padding: 10px 20px; }
+.btn-danger:hover { background-color: #bd2130; }
+.action-btn { background: #fff; border: 1px solid #ccc; border-radius: 50%; width: 28px; height: 28px;
+    cursor: pointer; font-size: 14px; line-height: 26px; text-align: center; padding: 0; }
+.action-btn:hover { background: #f0f0f0; border-color: #999; }
+.user-actions { display: flex; gap: 8px; justify-content: flex-start; }
+.form-row { display: flex; gap: 20px; width: 100%; }
+.form-row .form-group { flex: 1; }
+
+.event-actions {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    display: none;
+    gap: 6px;
+}
+.bar-event:hover .event-actions {
+    display: flex;
+}
+.event-actions .action-btn {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.5);
+}
+.event-actions .action-btn:hover {
+    background: rgba(255,255,255,0.4);
+}
+
+/* --- Settings Page --- */
+.data-section {
+    padding-top: 20px;
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+}
+.data-section h4 { margin-top: 0; margin-bottom: 5px; font-size: 16px; }
+.data-section p { font-size: 14px; color: #555; margin-top: 0; }
+.button-group { display: flex; gap: 10px; }
+.button-group .btn-secondary { width: auto; }
+.import-area { display: flex; align-items: center; gap: 15px; margin-top: 10px; }
+#file-name-display { font-size: 14px; font-style: italic; color: #555; }
+.import-status-box {
+    background-color: #232F3E; color: #fff; font-family: 'Courier New', Courier, monospace;
+    font-size: 13px; padding: 15px; border-radius: 4px; margin-top: 20px;
+    max-height: 200px; overflow-y: auto; white-space: pre-wrap; word-break: break-all;
+}
+.instructions-box {
+    background-color: #f7f7f7; border: 1px solid #ddd; border-radius: 4px;
+    padding: 15px; margin-top: 20px; font-size: 14px;
+}
+.instructions-box ul { margin: 10px 0 0 0; padding-left: 20px; }
+
+/* --- Date Picker Theme --- */
+.flatpickr-day.selected {
+    background: #0073BB;
+    border-color: #0073BB;
+}
+.flatpickr-day:hover {
+    background: #e3f2fd;
+}
+.flatpickr-day.today {
+    border-color: #FF9900;
+}
+#add-event-dates {
+    background-color: #fff;
+    cursor: pointer;
+}
+
+/* --- Footer --- */
+footer {
+    text-align: center;
+    padding: 10px;
+    font-size: 12px;
+    color: #555;
+    background-color: #EAEDED;
+}
+
+/*
+=========================================
+RESPONSIVE STYLES (MOBILE FRIENDLY)
+=========================================
+*/
+@media (max-width: 768px) {
+    .sidebar {
+        display: none; /* Hide sidebar on mobile for a simpler layout */
+    }
+    
+    #admin-panel-modern {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .main-content {
+        padding: 15px;
+    }
+
+    .login-box {
+        width: 90%;
+        max-width: 350px;
+    }
+
+    .content-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+
+    .widgets-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .table-container {
+        overflow-x: auto;
+    }
+
+    .modal-content {
+        width: 95%;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .bar-date {
+        width: 80px;
+        font-size: 12px;
+    }
+}

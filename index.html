@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Schedule</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+
+    <div id="login-container" class="container">
+        <div class="login-box">
+            <div class="logo-text">Work<span>Schedule</span></div>
+            <h1>Sign-In</h1>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn">Sign-In</button>
+                <p id="login-error" class="error-message"></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="app-container" class="hidden">
+        <header class="header">
+            <div class="logo-text">Work<span>Schedule</span></div>
+            <div class="user-info">
+                <span id="user-display"></span>
+                <button id="logout-btn" class="logout-btn">Logout</button>
+            </div>
+        </header>
+        
+        <div id="employee-dashboard" class="dashboard hidden">
+            <div class="content-box">
+                <div class="schedule-header">
+                    <button id="employee-prev-month-btn" class="month-nav-btn">◀</button>
+                    <h1 id="employee-schedule-title">My Schedule</h1>
+                    <button id="employee-next-month-btn" class="month-nav-btn">▶</button>
+                </div>
+                <div id="employee-schedule-view"></div>
+            </div>
+        </div>
+
+        <div id="supervisor-dashboard" class="dashboard hidden">
+            <div class="content-box">
+                <h1 id="supervisor-roster-title">Today's Roster</h1>
+                <div class="table-container">
+                    <table class="roster-table">
+                        <thead>
+                            <tr><th>Employee Name</th><th>Shift Time</th></tr>
+                        </thead>
+                        <tbody id="supervisor-roster-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="admin-panel-modern" class="dashboard hidden">
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-item active" data-page="dashboard">📈 Dashboard</a>
+                    <div class="nav-item-dropdown">
+                        <a href="#" class="nav-item">🗓️ Schedules <span class="arrow">▼</span></a>
+                        <div class="nav-submenu">
+                            <a href="#" class="nav-sub-item" data-view="bb-shifts">BB Shifts</a>
+                            <a href="#" class="nav-sub-item" data-view="bb-shifts-today">BB Shifts (Today)</a>
+                            <a href="#" class="nav-sub-item" data-view="gb-shifts">GB Shifts</a>
+                        </div>
+                    </div>
+                    <a href="#" class="nav-item" data-page="users">👥 Users</a>
+                    <a href="#" class="nav-item" data-page="settings">⚙️ Settings</a>
+                </nav>
+            </aside>
+
+            <main id="dashboard-page" class="main-content">
+                <div class="content-header">
+                    <h1>Admin Dashboard</h1>
+                </div>
+                <div class="widgets-grid">
+                    <div class="widget">
+                        <h3>Employees on Shift Today</h3>
+                        <p class="widget-value" id="widget-on-shift">--</p>
+                    </div>
+                    <div class="widget">
+                        <h3>Total L1 Employees</h3>
+                        <p class="widget-value" id="widget-total-employees">--</p>
+                    </div>
+                    <div class="widget">
+                        <h3>Scheduled Hours (This Week)</h3>
+                        <p class="widget-value" id="widget-hours-week">--</p>
+                    </div>
+                    <div class="widget full-width">
+                        <h3>Recent Activity</h3>
+                        <ul class="activity-list" id="widget-recent-activity">
+                            <li>Loading...</li>
+                        </ul>
+                    </div>
+                </div>
+            </main>
+
+            <main id="schedules-page" class="main-content hidden">
+                <div class="content-header">
+                    <h1 id="schedules-page-title">Schedules</h1>
+                    <button id="add-event-button" class="btn btn-primary">＋ Add Event</button>
+                </div>
+                
+                <div id="schedule-calendar-view">
+                     <div class="schedule-controls">
+                        <div class="form-group">
+                            <label for="view-schedule-employee">Viewing Schedule For:</label>
+                            <select id="view-schedule-employee"></select>
+                        </div>
+                    </div>
+                    <div class="schedule-header">
+                        <button id="admin-prev-month-btn" class="month-nav-btn">◀</button>
+                        <h2 id="admin-schedule-month-title">Month Year</h2>
+                        <button id="admin-next-month-btn" class="month-nav-btn">▶</button>
+                    </div>
+                    <div id="schedule-bar-view"></div>
+                </div>
+
+                <div id="schedule-today-view" class="hidden">
+                    <div class="table-container">
+                        <table class="roster-table">
+                            <thead>
+                                <tr><th>Employee Name</th><th>Shift Time</th><th>Department</th></tr>
+                            </thead>
+                            <tbody id="today-roster-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+            
+            <main id="users-page" class="main-content hidden">
+                <div class="content-header">
+                    <h1>User Management</h1>
+                    <button id="create-user-button" class="btn btn-primary">＋ Create User</button>
+                </div>
+                <div class="table-container">
+                    <table class="roster-table">
+                        <thead>
+                            <tr><th>Name</th><th>Email</th><th>Role</th><th>Actions</th></tr>
+                        </thead>
+                        <tbody id="users-table-body"></tbody>
+                    </table>
+                </div>
+            </main>
+
+            <main id="settings-page" class="main-content hidden">
+                <div class="content-header">
+                    <h1>Settings</h1>
+                </div>
+                <div class="widget">
+                    <h3>Data Management</h3>
+                    <div class="data-section">
+                        <h4>Export Data</h4>
+                        <p>Download your application data as a CSV file.</p>
+                        <div class="button-group">
+                            <button id="export-users-btn" class="btn btn-secondary">Export User List</button>
+                            <button id="export-schedule-btn" class="btn btn-secondary">Export Full Schedule</button>
+                        </div>
+                    </div>
+                    <div class="data-section">
+                        <h4>Import Schedule from Excel</h4>
+                        <p>Upload an .xlsx file to automatically assign shifts.</p>
+                        <div class="import-area">
+                            <input type="file" id="import-file-input" class="hidden" accept=".xlsx, .xls">
+                            <label for="import-file-input" class="btn btn-secondary">Choose File</label>
+                            <span id="file-name-display">No file chosen</span>
+                            <button id="upload-schedule-btn" class="btn btn-primary" disabled>Upload & Process</button>
+                        </div>
+                        <div id="import-status" class="import-status-box hidden"></div>
+                        <div class="instructions-box">
+                            <strong>Instructions:</strong> Your Excel file must have these exact column headers on the first sheet:
+                            <ul>
+                                <li><strong>EmployeeName</strong> (must match a name in the User list)</li>
+                                <li><strong>Date</strong> (format: YYYY-MM-DD)</li>
+                                <li><strong>StartTime</strong> (format: HH:MM in 24-hour)</li>
+                                <li><strong>EndTime</strong> (format: HH:MM in 24-hour)</li>
+                                <li><strong>Type</strong> (e.g., Work, FREI, URLAUB, KRANK)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <div id="add-event-modal" class="modal-backdrop hidden">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h2>Add New Event</h2>
+            <form id="add-event-form">
+                <div class="form-group"><label for="add-event-employee">Assign To Employee</label><select id="add-event-employee" required></select></div>
+                <div class="form-group"><label for="add-event-dates">Date(s)</label><input type="text" id="add-event-dates" placeholder="Click to select dates..." readonly></div>
+                <div class="form-group">
+                    <label for="event-type">Event Type</label>
+                    <select id="event-type" required>
+                        <option value="Work">Work</option>
+                        <option value="FREI">FREI (Free)</option>
+                        <option value="URLAUB">URLAUB (Vacation)</option>
+                        <option value="KRANK">KRANK (Sick)</option>
+                    </select>
+                </div>
+                <div id="time-inputs-container"><div class="form-row"><div class="form-group"><label for="event-start-time">Start Time</label><input type="time" id="event-start-time"></div><div class="form-group"><label for="event-end-time">End Time</label><input type="time" id="event-end-time"></div></div></div>
+                <button type="submit" class="btn">Add Event(s)</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="edit-event-modal" class="modal-backdrop hidden">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h2>Edit Event</h2>
+            <form id="edit-event-form">
+                <input type="hidden" id="edit-event-id">
+                <div class="form-group"><label>Employee</label><input type="text" id="edit-event-employee-name" readonly></div>
+                <div class="form-group"><label for="edit-event-date">Date</label><input type="date" id="edit-event-date" required></div>
+                <div class="form-group">
+                    <label for="edit-event-type">Event Type</label>
+                    <select id="edit-event-type" required>
+                        <option value="Work">Work</option>
+                        <option value="FREI">FREI (Free)</option>
+                        <option value="URLAUB">URLAUB (Vacation)</option>
+                        <option value="KRANK">KRANK (Sick)</option>
+                    </select>
+                </div>
+                <div id="edit-time-inputs-container"><div class="form-row"><div class="form-group"><label for="edit-event-start-time">Start Time</label><input type="time" id="edit-event-start-time"></div><div class="form-group"><label for="edit-event-end-time">End Time</label><input type="time" id="edit-event-end-time"></div></div></div>
+                <button type="submit" class="btn">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="create-user-modal" class="modal-backdrop hidden">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h2>Create New User</h2>
+            <form id="create-user-form">
+                <div class="form-row"><div class="form-group"><label for="new-user-name">Full Name</label><input type="text" id="new-user-name" required></div><div class="form-group"><label for="new-user-email">Email</label><input type="email" id="new-user-email" required></div></div>
+                 <div class="form-row"><div class="form-group"><label for="new-user-password">Password</label><input type="password" id="new-user-password" required></div><div class="form-group"><label for="new-user-role">Role</label><select id="new-user-role"><option value="L1">Employee (L1)</option><option value="L3">Supervisor (L3)</option><option value="L4+">Admin (L4+)</option></select></div></div>
+                <button type="submit" class="btn">Create Account</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="edit-user-modal" class="modal-backdrop hidden">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h2>Edit User</h2>
+            <form id="edit-user-form">
+                <input type="hidden" id="edit-user-id">
+                <div class="form-group"><label for="edit-user-name">Full Name</label><input type="text" id="edit-user-name" required></div>
+                <div class="form-group"><label for="edit-user-role">Role</label><select id="edit-user-role" required><option value="L1">Employee (L1)</option><option value="L3">Supervisor (L3)</option><option value="L4+">Admin (L4+)</option></select></div>
+                <button type="submit" class="btn">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="delete-modal" class="modal-backdrop hidden">
+        <div class="modal-content">
+             <span class="modal-close">&times;</span>
+             <h2 id="delete-modal-title">Confirm Deletion</h2>
+             <p id="delete-modal-text"></p>
+             <div class="modal-actions">
+                <button id="cancel-delete-btn" class="btn btn-secondary">Cancel</button>
+                <button id="confirm-delete-btn" class="btn btn-danger">Confirm Delete</button>
+             </div>
+        </div>
+    </div>
+
+    <div id="change-password-modal" class="modal-backdrop hidden">
+        <div class="modal-content">
+            <h2>Change Your Password</h2>
+            <p>For security, you must change your temporary password before continuing.</p>
+            <form id="change-password-form">
+                <div class="form-group">
+                    <label for="new-password">New Password</label>
+                    <input type="password" id="new-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Confirm New Password</label>
+                    <input type="password" id="confirm-password" required>
+                </div>
+                <button type="submit" class="btn">Set New Password</button>
+                <p id="password-change-error" class="error-message"></p>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        &copy; Developed by Karim Elbeih Badawy (DAP8) 2025
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script type="module" src="app.js"></script>
+</body>
+</html>
